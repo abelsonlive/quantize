@@ -1,7 +1,6 @@
 import uuid
 try:
     from setuptools import setup
-    from pip.req import parse_requirements
 except ImportError:
     raise ImportError(
         "Please upgrade `setuptools` to the newest version via: "
@@ -11,7 +10,7 @@ except ImportError:
 def build():
     setup(
         name = "quantize",
-        version = "0.0.2",
+        version = "0.0.3",
         author = "Brian Abelson",
         author_email = "brianabelson@gmail.com",
         description = "A simple command line utility for syncing arbitrary messages sent via `stdin` to a midi clock.",
@@ -20,7 +19,12 @@ def build():
         url = "https://github.com/abelsonlive/quantize",
         packages = ['quantize'],
         long_description = "",
-        install_requires = [str(ir.req) for ir in parse_requirements("requirements.txt", session=uuid.uuid1())],
+        install_requires = [
+            "gevent==1.0.1",
+            "greenlet==0.4.5",
+            "mido==1.1.12",
+            "python-rtmidi==0.5b1"
+        ],
         scripts = ['bin/q'],
         classifiers=[
             "Development Status :: 3 - Alpha",
