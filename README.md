@@ -36,11 +36,14 @@ $ echo "1\n2\n3\n4" | q --port 'IAC Driver Bus 1' --beat 1/4
 Full usage:
 
 ```
--h, --help            show this help message and exit
--p PORT, --port PORT  The midi port on which to listen for clock messages.
--b BEAT, --beat BEAT  The beat count to sync stdin to, e.g. "1/8", "1/4",
-                    "1", etc
--l, --list            List available input midi ports and exit.
+optional arguments:
+  -h, --help            show this help message and exit
+  -p PORT, --port PORT  The midi port on which to listen for clock messages.
+  -b BEAT, --beat BEAT  The beat count to sync stdin to, e.g. "1/8", "1/4",
+                        "1", etc
+  -l LATENCY, --latency LATENCY
+                        Number of clock ticks to offset quantization by.
+  -i, --list-inputs     List available input midi ports and exit.
 ```
 
 ## TODO 
