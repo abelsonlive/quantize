@@ -11,8 +11,8 @@ You can see a full example [here](examples/)
 _Tested only on Mac OSX_
 If you have trouble installing `python-rtmidi`, see the docs for [`mido`](http://mido.readthedocs.org/en/latest/installing.html)
 ```
-brew install portmidi
-pip install quantize
+$ brew install portmidi
+$ pip install quantize
 ```
 
 ## Usage
@@ -30,12 +30,12 @@ Quantize input lines:
 (You can optionally set `QUANTIZE_PORT` as an environment variable.)
 
 ```bash
-echo "1\n2\n3\n4" | q --port 'IAC Driver Bus 1' --beat 1/4
+$ echo "1\n2\n3\n4" | q --port 'IAC Driver Bus 1' --beat 1/4
 ```
 
 Full usage:
 
-```bash
+```
 -h, --help            show this help message and exit
 -p PORT, --port PORT  The midi port on which to listen for clock messages.
 -b BEAT, --beat BEAT  The beat count to sync stdin to, e.g. "1/8", "1/4",
