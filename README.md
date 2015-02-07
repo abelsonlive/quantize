@@ -5,7 +5,7 @@ quantize
 
 For each line of `stdin` it blocks until a tick at a specified beat has been recieved from a midi clock, it then writes this message to `stdout`.
 
-You can see a full example [here](examples/).
+You can see a full example [here](example/).
 
 ## Installation
 _Tested only on Mac OSX_
