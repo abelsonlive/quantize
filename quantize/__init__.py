@@ -14,6 +14,10 @@ mido.set_backend('mido.backends.rtmidi')
 # clock queue
 clock = Queue()
 
+# unbuffered readers
+sys.stdin = os.fdopen(sys.stdin.fileno(), 'r', 1)
+sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 1)
+
 # a lookup of notes => # midi clock messages
 # midi clock sends BPM * 24 messages per minute.
 # EG 60 BPM * 24 messages = 
@@ -40,17 +44,16 @@ BEATS = {
     "8": 768,
 }
 
-def midi_clock(inport, tick_count):
+def midi_clock(inport, tick_count, latency):
     """
     Listen to midi clock and send 
     a "tick" to the queue at a desired 
     beat
     """
-    then = time.time()
-    for i, msg in enumerate(inport):
-        if i != 0 and i % tick_count == 0:
-            clock.put_nowait(time.time() - then)
-            then = time.time()
+    start = latency*-1
+    for i, msg in enumerate(inport, start):
+        if i != start and i % tick_count == 0:
+            clock.put_nowait('tick')
 
 def stdin():
     """
@@ -64,10 +67,10 @@ def stdin():
         # write it to stdout
         sys.stdout.write(line)
 
-def quantize(inport, tick_count):
+def quantize(inport, tick_count, latency):
     # spawn clock + stdin
     gevent.joinall([
-        gevent.spawn(midi_clock, inport, tick_count),
+        gevent.spawn(midi_clock, inport, tick_count, latency),
         gevent.spawn(stdin)
     ])
 
@@ -81,13 +84,16 @@ def main():
     parser.add_argument('-b', '--beat', dest='beat',
         help='The beat count to sync stdin to, e.g. "1/8", "1/4", "1", etc',
         default="1/4")
-    parser.add_argument('-l', '--list', dest='list', action='store_true',
+    parser.add_argument('-l', '--latency', dest='latency', type=int,
+        help='Number of clock ticks to offset quantization by.',
+        default=1)
+    parser.add_argument('-i', '--list-inputs', dest='list_inputs', action='store_true',
         help='List available input midi ports and exit.',
         default=False)
     args = parser.parse_args()
 
     # list input midi ports and exit.
-    if args.list:
+    if args.list_inputs:
         print "Available input ports:"
         for name in mido.get_input_names():
             print "'{}'".format(name)
@@ -112,7 +118,7 @@ def main():
 
     # run
     try:
-        quantize(inport, tick_count)
+        quantize(inport, tick_count, args.latency)
     except KeyboardInterrupt:
         sys.exit(0)
     sys.exit(0)
