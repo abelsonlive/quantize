@@ -9,6 +9,7 @@ You can see a full example [here](examples/).
 
 ## Installation
 _Tested only on Mac OSX_
+
 If you have trouble installing `python-rtmidi`, see the docs for [`mido`](http://mido.readthedocs.org/en/latest/installing.html)
 ```
 $ brew install portmidi
