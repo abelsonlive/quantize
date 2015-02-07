@@ -11,7 +11,7 @@ except ImportError:
 def build():
     setup(
         name = "quantize",
-        version = "0.0.1",
+        version = "0.0.2",
         author = "Brian Abelson",
         author_email = "brianabelson@gmail.com",
         description = "A simple command line utility for syncing arbitrary messages sent via `stdin` to a midi clock.",
