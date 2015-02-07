@@ -7,7 +7,7 @@ For each line of `stdin` it blocks until a tick at a specified beat has been rec
 
 You can see a full example [here](example/).
 
-**NOTE** this doesn't work great, theres some latency issues probably because I'm using python and not `C` :/.
+**NOTE** this doesn't work great, theres some latency issues probably because I'm using `python` and not `C` :/
 
 ## Installation
 _Tested only on Mac OSX_
