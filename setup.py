@@ -20,7 +20,7 @@ def build():
         packages = ['quantize'],
         long_description = "",
         install_requires = [
-            "gevent==1.0.1",
+            "gevent==23.9.1",
             "greenlet==0.4.5",
             "mido==1.1.12",
             "python-rtmidi==0.5b1"
